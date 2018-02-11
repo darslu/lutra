@@ -1,0 +1,79 @@
+********************************************************************************
+DUPLICATOR-LITE PACKAGE-LOG: February 11, 2018 6:11 pm
+NOTICE: Do NOT post to public sites or forums 
+********************************************************************************
+VERSION:	1.2.32
+WORDPRESS:	4.9.4
+PHP INFO:	7.1.8 | SAPI: apache2handler
+SERVER:		Apache/2.4.27 (Unix) OpenSSL/1.0.2l PHP/7.1.8 mod_perl/2.0.8-dev Perl/v5.16.3 
+PHP TIME LIMIT: (0) no time limit imposed 
+PHP MAX MEMORY: 2048M (128M default) 
+MEMORY STACK: 6MB 
+
+********************************************************************************
+DATABASE:
+********************************************************************************
+BUILD MODE:   PHP(query limit - 100)
+MYSQLTIMEOUT: 5000
+MYSQLDUMP:    Not Supported 
+TABLES: total:13 | filtered:0 | create:13 
+FILTERED: [] 
+SQL CREATED: 20180211_lutra_cfa460ed97b369108576180211181003_database.sql 
+SQL FILE SIZE: 803.54KB (822821) 
+SQL FILE TIME: 2018-02-11 18:11:08 
+SQL RUNTIME: 0.77 sec. 
+
+******************************************************************************** 
+ARCHIVE (ZIP): 
+******************************************************************************** 
+ARCHIVE DIR:  /Applications/XAMPP/xamppfiles/htdocs/PHP-Kursas/belekas/wordpress 
+ARCHIVE FILE: 20180211_lutra_cfa460ed97b369108576180211181003_archive.zip 
+FILTERS: *OFF* 
+DIRS:
+	not set 
+FILES:
+	not set 
+EXTS:  not set 
+---------------------------------------- 
+COMPRESSING 
+SIZE:	69.85MB 
+STATS:	Dirs 722 | Files 5,907 
+SQL ADDED: 20180211_lutra_cfa460ed97b369108576180211181003_database.sql 
+ZipArchive Object
+(
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 6629
+    [filename] => /Applications/XAMPP/xamppfiles/htdocs/PHP-Kursas/belekas/wordpress/wp-snapshots/tmp/20180211_lutra_cfa460ed97b369108576180211181003_archive.zip
+    [comment] => 
+)
+ 
+COMPRESSION RESULT: '1' 
+COMPRESSED SIZE: 44.68MB 
+ARCHIVE RUNTIME: 9.86 sec. 
+MEMORY STACK: 8MB 
+
+******************************************************************************** 
+MAKE INSTALLER: 
+******************************************************************************** 
+Build Start 
+Build Finished 
+Preping for use 
+PACK SIZE:  
+Template parsed with new data 
+Complete [/Applications/XAMPP/xamppfiles/htdocs/PHP-Kursas/belekas/wordpress/wp-snapshots/tmp/20180211_lutra_cfa460ed97b369108576180211181003_installer.php] 
+Added to archive 
+
+******************************************************************************** 
+INTEGRITY CHECKS: 
+******************************************************************************** 
+SQL File: 803.54KB 
+Installer File: 444.03KB 
+Archive File: 44.68MB  
+
+********************************************************************************
+RECORD ID:[1]
+TOTAL PROCESS RUNTIME: 11.38 sec.
+PEAK PHP MEMORY USED: 10MB
+DONE PROCESSING => 20180211_lutra February 11, 2018 6:11 pm
+ 
