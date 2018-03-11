@@ -11,11 +11,11 @@ class Notification
     const NOTIFICATION_ACTION_PREFIX = "cp_notification_notice_";
 
     private $name;
-    
+
     private $start = '*';
     private $end = '*';
     private $after = null;
-    
+
     private $dismissible = true;
     private $type = "info";
     private $active_callback = null;
@@ -23,6 +23,7 @@ class Notification
     private $priority = 0;
 
     private $data;
+
 
     public function __construct($data)
     {
@@ -39,6 +40,18 @@ class Notification
         }
     }
 
+
+    // php 5.3 compatibility
+    public function __get($name)
+    {
+        if (property_exists($this, $name)) {
+            return $this->$name;
+        } else {
+            throw new \Exception("Property {$name} does not exists in class Notification", 1);
+
+        }
+    }
+
     public function addNotificationView()
     {
         $self = $this;
@@ -51,7 +64,7 @@ class Notification
                 if ($self->handle) {
                     call_user_func($self->handle, $self->data);
                 } else {
-                    do_action(\Mesmerize\Notify\Notification::NOTIFICATION_ACTION_PREFIX . $self->name, $self->data);
+                    do_action(\OnePageExpress\Notify\Notification::NOTIFICATION_ACTION_PREFIX . $self->name, $self->data);
                 }
                 ?>
 
@@ -76,9 +89,7 @@ class Notification
     public function canShow()
     {
         $canShow = (
-            $this->isActive() &&
-            ! $this->isDismissed() &&
-            $this->inTimeBoundaries()
+            $this->isActive() && ! $this->isDismissed() && $this->inTimeBoundaries()
         );
 
         return $canShow;

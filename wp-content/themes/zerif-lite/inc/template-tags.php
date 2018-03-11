@@ -299,9 +299,9 @@ if ( ! function_exists( 'zerif_our_team_header_title_function' ) ) :
 		}
 
 		if ( ! empty( $zerif_ourteam_title ) ) :
-			echo '<h2 class="dark-text">' . wp_kses_post( $zerif_ourteam_title ) . '</h2>';
+			echo '<h2 class="white-text">' . wp_kses_post( $zerif_ourteam_title ) . '</h2>';
 		elseif ( is_customize_preview() ) :
-			echo '<h2 class="dark-text zerif_hidden_if_not_customizer"></h2>';
+			echo '<h2 class="white-text zerif_hidden_if_not_customizer"></h2>';
 		endif;
 	}
 endif;
@@ -345,11 +345,11 @@ if ( ! function_exists( 'zerif_testimonials_header_title_function' ) ) :
 
 		if ( ! empty( $zerif_testimonials_title ) ) :
 
-			echo '<h2 class="white-text">' . wp_kses_post( $zerif_testimonials_title ) . '</h2>';
+			echo '<h2 class="dark-text">' . wp_kses_post( $zerif_testimonials_title ) . '</h2>';
 
 		elseif ( is_customize_preview() ) :
 
-			echo '<h2 class="white-text zerif_hidden_if_not_customizer"></h2>';
+			echo '<h2 class="dark-text zerif_hidden_if_not_customizer"></h2>';
 
 		endif;
 	}
@@ -365,11 +365,11 @@ if ( ! function_exists( 'zerif_testimonials_header_subtitle_function' ) ) :
 
 		if ( ! empty( $zerif_testimonials_subtitle ) ) :
 
-			echo '<h6 class="white-text section-legend">' . wp_kses_post( $zerif_testimonials_subtitle ) . '</h6>';
+			echo '<h6 class="dark-text section-legend">' . wp_kses_post( $zerif_testimonials_subtitle ) . '</h6>';
 
 		elseif ( is_customize_preview() ) :
 
-			echo '<h6 class="white-text section-legend zerif_hidden_if_not_customizer"></h6>';
+			echo '<h6 class="dark-text section-legend zerif_hidden_if_not_customizer"></h6>';
 
 		endif;
 	}

@@ -118,8 +118,8 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
         <script id="cp-content-templates-text" type="text/template">
             <li class="customize-control customize-control-text">
                 <label>
-                    <span class="customize-control-title"><%= label %></span>
-                    <input type="text" value="<%= value %>" id="<%= id %>">
+                    <span class="customize-control-title">{{{ label }}}</span>
+                    <input type="text" value="{{ value }}" id="{{{ id }}}">
                 </label>
             </li>
         </script>
@@ -127,33 +127,33 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
 
         <script id="cp-content-templates-text-with-checkbox" type="text/template">
             <li class="customize-control customize-control-checkbox">
-                <% if (canHide) { %>
-                <label for="<%= id %>__visible">
-                    <input id="<%= id %>__visible" type="checkbox">
-                    <%= enableLabel %>
+                <#  if (canHide) {  #>
+                    <label for="{{  id  }}__visible">
+                        <input id="{{  id  }}__visible" type="checkbox">
+                        {{ enableLabel }}
                 </label>
-                <% if (description) { %>
+                    <#  if (description) {  #>
                 <span class="description customize-control-description">
-                                <%= description %>
+                                {{  description  }}
                             </span>
-                <% } %>
-                <% } %>
+                        <#  }  #>
+                            <#  }  #>
             </li>
             <li class="customize-control customize-control-text">
-                <label id="<%= id %>_container">
-                    <span class="customize-control-title"><%= label %></span>
-                    <input type="text" value="<%= value.value %>" id="<%= id %>">
+                <label id="{{  id  }}_container">
+                    <span class="customize-control-title">{{{  label  }}}</span>
+                    <input type="text" value="{{{  value.value  }}}" id="{{{  id  }}}">
                 </label>
                 <inline-script>
-                    jQuery("#<%= id %>__visible").prop("checked", <%= value.visible %>);
-                    jQuery("#<%= id %>__visible").change(function(){
+                    jQuery("#{{ id }}__visible").prop("checked", {{ value.visible }});
+                    jQuery("#{{ id }}__visible").change(function(){
                     if (jQuery(this).prop("checked")) {
-                    jQuery("#<%= id %>_container").show();
+                    jQuery("#{{ id }}_container").show();
                     } else {
-                    jQuery("#<%= id %>_container").hide();
+                    jQuery("#{{ id }}_container").hide();
                     }
                     })
-                    jQuery("#<%= id %>__visible").trigger("change");
+                    jQuery("#{{ id }}__visible").trigger("change");
                 </inline-script>
             </li>
         </script>
@@ -163,44 +163,46 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
             <li class="customize-control customize-control-text">
                 <label class="link-options-group">
                     <div class="link-option">
-                        <span class="customize-control-title"><%= label %></span>
-                        <input type="text" value="<%= value.link %>" id="<%= id %>__link">
+                        <span class="customize-control-title">{{{  label  }}}</span>
+                        <input type="text" value="{{{  value.link  }}}" id="{{  id  }}__link">
                     </div>
-                    <% if (value.target ) { %>
+                    <#  if (value.target ) {  #>
                     <div class="target-option">
                         <span class="customize-control-title">Target</span>
-                        <select type="text" id="<%= id %>__target">
+                            <select type="text" id="{{  id  }}__target">
                             <option value="_self">Same tab</option>
                             <option value="_blank">New tab</option>
-                            <option style="display:<%=  (CP_Customizer.IS_PRO?'':'none') %>" value="lightbox">Lightbox</option>
+                                <# if(CP_Customizer.IS_PRO) { #>
+                                    <option style="display:{{   (CP_Customizer.IS_PRO?'':'none')  }}" value="lightbox">Lightbox</option>
+                                    <# } #>
                         </select>
                         <inline-script>
-                            jQuery("#<%= id %>__target").val("<%= value.target %>")
+                                jQuery("#{{ id }}__target").val("{{{ value.target }}}")
                         </inline-script>
                     </div>
-                    <% } %>
+                        <#  }  #>
                 </label>
             </li>
         </script>
 
         <script id="cp-content-templates-list" type="text/template">
             <li class="customize-control customize-control-text">
-                <div class="list-control list" id="<%= id %>">
-                    <% _.each(value, function(item, index) { %>
+                <div class="list-control list" id="{{{  id  }}}">
+                    <#  _.each(value, function(item, index) {  #>
                     <div class="section-list-item">
                         <div class="handle reorder-handler"></div>
-                        <input class="item-editor" type="text" value="<%= item.value %>">
+                            <input class="item-editor" type="text" value="{{{  item.value  }}}">
                         <div class="item-actions">
                             <span class="item-remove" title="Delete section from page" onClick='jQuery(this).parents(".section-list-item").remove()'></span>
                         </div>
                     </div>
-                    <% }); %>
+                        <#  });  #>
                 </div>
-                <a class="add-item button-primary" id="add_<%= id %>">Add Item</a>
+                <a class="add-item button-primary" id="add_{{  id  }}">Add Item</a>
                 <inline-script>
-                    jQuery("#<%= id %>").sortable({"axis" : "y"});
-                    jQuery("#add_<%= id %>").click(function(){
-                    var list = jQuery("#<%= id %>");
+                    jQuery("#{{ id }}").sortable({"axis" : "y"});
+                    jQuery("#add_{{ id }}").click(function(){
+                    var list = jQuery("#{{ id }}");
                     var $item = list.children().first().clone();
                     list.append($item);
                     })
@@ -210,17 +212,17 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
         <script id="cp-content-templates-image" type="text/template">
             <li class="customize-control customize-control-text" style="display: list-item;">
                 <label>
-                    <span class="customize-control-title"><%= label %></span>
+                    <span class="customize-control-title">{{{  label  }}}</span>
 
                     <div class="image-wrapper">
-                        <img id="preview-<%= id %>" src="<%= value %>">
+                        <img id="preview-{{  id  }}" src="{{{  value  }}}">
                     </div>
                     <div class="image-controls">
-                        <input type="text" value="<%= value %>" id="<%= id %>">
-                        <button type="button" onClick='CP_Customizer.openMediaBrowser("<%= mediaType %>", jQuery("#<%= id %>"), <%= JSON.stringify(mediaData) %>)' class="button upload-button cp-image-select" data-cp-src="<%= id %>">Browse Image</button>
+                        <input type="text" value="{{{  value  }}}" id="{{{  id  }}}">
+                        <button type="button" onClick='CP_Customizer.openMediaBrowser("{{{  mediaType  }}}", jQuery("#{{  id  }}"), {{  JSON.stringify(mediaData)  }})' class="button upload-button cp-image-select" data-cp-src="{{{  id  }}}">Browse Image</button>
                     </div>
                     <inline-script>
-                        jQuery("#<%= id %>").change(function(){ jQuery("#preview-<%= id %>").attr("src",this.value)})
+                        jQuery("#{{ id }}").change(function(){ jQuery("#preview-{{ id }}").attr("src",this.value)})
                     </inline-script>
                 </label>
             </li>
@@ -228,64 +230,100 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
 
         <script id="cp-content-templates-linked-icon" type="text/template">
             <li class="customize-control customize-control-text" style="display: list-item;">
-                <label>
-                    <span class="customize-control-title"><%= label %></span>
+                <div class="label">
+                    <span class="customize-control-title">{{{  label  }}}</span>
                     <div class="image-wrapper">
-                        <i id="preview-icon-<%= id %>" class="fa <%= value.icon %>"></i>
-                        <% if (canHide) { %>
-                        <label for="<%= id %>__visible">
-                            <input id="<%= id %>__visible" type="checkbox" <%= (value.visible?"checked='true'":"") %>>
+                        <i id="preview-icon-{{  id  }}" class="fa {{  value.icon  }}"></i>
+                        <#  if (canHide) {  #>
+                            <label for="{{  id  }}__visible">
+                                <input id="{{  id  }}__visible" type="checkbox" {{ (value.visible?"checked='true'":"") }}>
                             Visible
                         </label>
-                        <% } %>
+                            <#  }  #>
                     </div>
                     <div class="image-controls">
-                        <div style="float: left;width: calc( 100% - 96px);box-sizing: border-box;">
+                        <div style="float: left;width: calc( 100% - 110px);box-sizing: border-box;">
                             <span class="customize-control-title">Link</span>
-                            <input type="text" value="<%= value.link %>" id="<%= id %>__link">
+                            <input type="text" value="{{{  value.link  }}}" id="{{  id  }}__link">
                         </div>
 
-                        <div style="float: left;width: 96px;padding-left: 4px;box-sizing: border-box;<% if (!value.target) { %>display:none<% } %>">
+                        <div style="float: left;width: 110px;padding-left: 4px;box-sizing: border-box;<#  if (!value.target) {  #>display:none<#  }  #>">
                             <span class="customize-control-title">Target</span>
-                            <select type="text" id="<%= id %>__target">
+                            <select type="text" id="{{  id  }}__target">
                                 <option value="_self">Same tab</option>
                                 <option value="_blank">New tab</option>
-                                <option style="display:<%=  (CP_Customizer.IS_PRO?'':'none') %>" value="lightbox">Lightbox</option>
+                                <# if(CP_Customizer.IS_PRO) { #>
+                                <option style="display:{{   (CP_Customizer.IS_PRO?'':'none')  }}" value="lightbox">Lightbox</option>
+                                <# } #>
                             </select>
                         </div>
 
-                        <input type="hidden" value="<%= value.icon %>" id="<%= id %>__icon">
-                        <button type="button" onClick='CP_Customizer.openMediaBrowser("<%= mediaType%>", jQuery("#<%= id %>__icon"), <%= JSON.stringify(mediaData) %>)' class="button upload-button cp-fa-select" data-cp-src="<%= id %>__icon">Browse Icon</button>
+                        <input type="hidden" value="{{{  value.icon  }}}" id="{{  id  }}__icon">
+                        <button type="button" onClick='CP_Customizer.openMediaBrowser("{{{  mediaType }}}", jQuery("#{{  id  }}__icon"), {{  JSON.stringify(mediaData)  }})' class="button upload-button cp-fa-select" data-cp-src="{{  id  }}__icon">Browse Icon</button>
                     </div>
-                </label>
+                    </div>
                 <inline-script>
-                    jQuery("#<%= id %>__target").val("<%= value.target %>")
-                    jQuery("#<%= id %>__icon").change(function(){ jQuery("#preview-icon-<%= id %>").attr("class","fa " + this.value)})
+                    jQuery("#{{ id }}__target").val("{{{ value.target }}}")
+                    jQuery("#{{ id }}__icon").change(function(){ jQuery("#preview-icon-{{ id }}").attr("class","fa " + this.value)})
                 </inline-script>
             </li>
         </script>
 
         <script id="cp-content-templates-icon" type="text/template">
             <li class="customize-control customize-control-text" style="display: list-item;">
-                <label>
-                    <span class="customize-control-title"><%= label %></span>
+                <div>
+                    <span class="customize-control-title">{{{  label  }}}</span>
                     <div class="image-wrapper">
-                        <i id="preview-icon-<%= id %>" class="fa <%= value.icon %>"></i>
-                        <% if (canHide) { %>
-                        <label for="<%= id %>__visible">
-                            <input id="<%= id %>__visible" type="checkbox" <%= (value.visible?"checked='true'":"") %>>
+                        <i id="preview-icon-{{  id  }}" class="fa {{  value.icon  }}"></i>
+                        <#  if (canHide) {  #>
+                            <label for="{{  id  }}__visible">
+                                <input id="{{  id  }}__visible" type="checkbox" {{ (value.visible?"checked='true'":"") }}>
                             Visible
                         </label>
-                        <% } %>
+                            <#  }  #>
                     </div>
                     <div class="image-controls">
-
-                        <input type="hidden" value="<%= value.icon %>" id="<%= id %>__icon">
-                        <button type="button" onClick='CP_Customizer.openMediaBrowser("<%= mediaType%>", jQuery("#<%= id %>__icon"), <%= JSON.stringify(mediaData) %>)' class="button upload-button cp-fa-select" data-cp-src="<%= id %>__icon">Browse Icon</button>
+                        <input type="hidden" value="{{{  value.icon  }}}" id="{{  id  }}__icon">
+                        <button type="button" onClick='CP_Customizer.openMediaBrowser("{{{  mediaType }}}", jQuery("#{{  id  }}__icon"), {{  JSON.stringify(mediaData)  }})' class="button upload-button cp-fa-select" data-cp-src="{{  id  }}__icon">Browse Icon</button>
+                        <div>
+                            <# if(typeof styles !== 'undefined') { #>
+                                <div style="float: left;width: 180px;">
+                                    <span class="customize-control-title" style="margin:0.5rem 0">Icon Style</span>
+                                    <select type="text" id="{{  id  }}__style">
+                                        <# _.each(styles, function(item, index) {  #>
+                                            <option value="{{{ item.value }}}">{{ item.label }}</option>
+                                            <#  }) #>
+                                    </select>
+                                    <inline-script>
+                                        try{
+                                            jQuery("[id={{ id }}__style").val("{{{ value.style }}}")
+                                        } catch(e){}
+                                    </inline-script>
                     </div>
-                </label>
+
+                            <# } #>
+
+                            <# if(typeof sizes !== 'undefined') { #>
+                                <div style="float: left;margin-left: 10px;width: 130px;">
+                                    <span class="customize-control-title" style="margin:0.5rem 0">Icon Size</span>
+                                    <select type="text" id="{{  id  }}__size">
+                                        <#  _.each(sizes, function(item, index) {  #>
+                                            <option value="{{{ item.value }}}">{{ item.label }}</option>
+                                            <#  }) #>
+                                    </select>
                 <inline-script>
-                    jQuery("#<%= id %>__icon").change(function(){ jQuery("#preview-icon-<%= id %>").attr("class","fa " + this.value)})
+                                        try{
+                                        jQuery("[id={{ id }}__size").val("{{{ value.size }}}")
+                                        } catch(e){}
+                                    </inline-script>
+                                </div>
+                            <# } #>
+                        </div>
+
+                    </div>
+                </div>
+                <inline-script>
+                    jQuery("#{{ id }}__icon").change(function(){ jQuery("#preview-icon-{{ id }}").attr("class","fa " + this.value)})
                 </inline-script>
             </li>
         </script>
@@ -298,7 +336,7 @@ class ContentPanel extends \OnePageExpress\Customizer\BasePanel
     public function render_template()
     {
         ?>
-        <li id="accordion-panel-{{ data.id }}" data-name="{{ data.id }}" class="accordion-section control-section control-panel control-panel-{{ data.type }}">
+        <li id="accordion-panel-{{ data.id }}" data-name="{{{ data.id }}}" class="accordion-section control-section control-panel control-panel-{{ data.type }}">
             <h3 class="accordion-section-title no-chevron" tabindex="0">
                 {{ data.title }}
 

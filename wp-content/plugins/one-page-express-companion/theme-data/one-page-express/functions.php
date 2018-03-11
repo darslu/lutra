@@ -117,7 +117,7 @@ function one_page_express_contact_form($attrs = array())
     if ($contact_shortcode !== "") {
         echo do_shortcode($contact_shortcode);
     } else {
-        echo '<p style="text-align:center;color:#ababab">' . __('Contact form will be displayed here. To activate it you have to set the "contact form shortcode" parameter in Customizer.',
+        echo '<p style="text-align:center;color:#ababab">' . __('Contact form will be displayed here. To activate it you have to click this area and set the shortcode parameter in Customizer.',
                 'one_page_express-companion') . '</p>';
     }
 

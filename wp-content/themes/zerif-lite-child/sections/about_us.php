@@ -314,15 +314,15 @@ if ( ! empty( $zerif_aboutus_feature4_nr ) || ! empty( $zerif_aboutus_feature4_t
 
 		echo '<div class="our-clients">';
 
-		if ( ! empty( $zerif_aboutus_clients_title_text ) ) {
+		// if ( ! empty( $zerif_aboutus_clients_title_text ) ) {
 
-			echo '<h5><span class="section-footer-title">' . wp_kses_post( $zerif_aboutus_clients_title_text ) . '</span></h5>';
+		// 	echo '<h5><span class="section-footer-title">' . wp_kses_post( $zerif_aboutus_clients_title_text ) . '</span></h5>';
 
-		} elseif ( is_customize_preview() ) {
+		// } elseif ( is_customize_preview() ) {
 
-			echo '<h5><span class="section-footer-title"></span></h5>';
+		// 	echo '<h5><span class="section-footer-title"></span></h5>';
 
-		}
+		// }
 
 			echo '</div>';
 

@@ -13,8 +13,100 @@ Domain Path: /languages/
 Tags: one-column, two-columns, right-sidebar,full-width-template,rtl-language-support,sticky-post,theme-options, custom-background, custom-menu, editor-style, featured-images, threaded-comments, translation-ready, footer-widgets, portfolio, e-commerce, blog
 */
 
+/* * {font-family:"Courier New", Courier, monospace !important} */
+
 .focus-box h3 {
-
 	color: #ffffff;
+}
+.red-btn {
+	background: #4d4dff;
+}
+.green-btn {
+	background: #0000b7;
+}
+.red-btn:hover {
+	color: #fff;
+	background: #4d4dffc9;
+}
+.red-btn:focus {
+	color: #fff;
+	background: #3d3dd3c9;
+}
+.pirate_forms .pirate-forms-submit-button:hover {
+	color: #fff;
+	background: #4d4dffc9;
+}
+.green-btn:hover {
+	color: #fff;
+	background: #0000b7c4;
+}
+.green-btn:focus {
+	color: #fff;
+	background: #00008dc4;
+}
+.about-us {
+	color: #fff;
+	background: #0000b7b9;
+}
+.focus-box .service-icon {
+	border: 0px solid #ececec;
+}
+.about-us p {
+	color: #fff;
+	font-size: 16px;
+}
+.testimonial {
+	background: #ffffff;
+}
+#client-feedbacks .feedback-box,
+.testimonial .widget_zerif_testim-widget {
+	border:1px solid black;
+	
+}
+.our-team {
+	background: #4d4dff;
+}
 
+.our-team p {
+	color: white;
+}
+
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+	color: #4d4dff;
+}
+.navbar-inverse .navbar-nav > li.current > a {
+	position: relative;
+	outline: none;
+	color: #4d4dff;
+}
+
+ul.nav > li.current_page_item.current > a:before {
+	background: #4d4dff;
+}
+
+.red-border-bottom:before {
+	background: #fff;
+}
+
+.about-us .column {
+	margin-bottom: 0px;
+}
+
+.red-text {
+	color: #4d4dff;
+}
+
+.testimonial .section-header .section-legend {
+	color: rgb(0, 0, 0);
+}
+
+::selection {
+	color: #fff;
+	background: #4d4dff;
+}
+::-moz-selection {
+	color: #fff;
+	background: #4d4dff;
 }

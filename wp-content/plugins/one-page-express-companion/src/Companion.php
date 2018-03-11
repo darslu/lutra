@@ -5,19 +5,19 @@ namespace OnePageExpress;
 class Companion
 {
 
-    private static $instance       = null;
+    private static $instance = null;
     private static $functionsFiles = array();
 
     private $_customizer = null;
 
-    private $cpData        = array();
+    private $cpData = array();
     private $remoteDataURL = null;
 
-    private $theme     = null;
-    public $themeName  = null;
+    private $theme = null;
+    public $themeName = null;
     private $themeSlug = null;
-    public $version    = null;
-    private $path      = null;
+    public $version = null;
+    private $path = null;
 
     private $getCustomizerDataCache = array();
 
@@ -34,7 +34,7 @@ class Companion
 
         $this->path = $root;
 
-        if (!$this->isActiveThemeSupported()) {
+        if ( ! $this->isActiveThemeSupported()) {
             return;
         }
 
@@ -42,7 +42,7 @@ class Companion
             require_once $this->themeDataPath("/functions.php");
         }
 
-        if (!self::$instance) {
+        if ( ! self::$instance) {
             self::$instance = $this;
             add_action('init', array($this, 'initCompanion'));
             $this->registerActivationHooks();
@@ -115,11 +115,11 @@ class Companion
     public function checkIfCompatibleChildTheme()
     {
         $theme = wp_get_theme();
-       
-        if($theme && $theme->get('Template')){
+
+        if ($theme && $theme->get('Template')) {
             $template = $theme->get('Template');
-            
-            if(in_array($template, $this->getCustomizerData('themes'))){
+
+            if (in_array($template, $this->getCustomizerData('themes'))) {
                 add_filter('cloudpress\customizer\supports', "__return_true");
             }
 
@@ -131,7 +131,7 @@ class Companion
     {
         global $wp_customize;
 
-        if (!class_exists("\Kirki")) {
+        if ( ! class_exists("\Kirki")) {
             return;
         }
 
@@ -140,7 +140,7 @@ class Companion
             return;
         }
 
-        $settings = (array) $this->getCustomizerData("customizer:settings");
+        $settings = (array)$this->getCustomizerData("customizer:settings");
 
         foreach ($settings as $id => $data) {
             $controlClass = self::getTreeValueAt($data, "control:class", "");
@@ -153,7 +153,7 @@ class Companion
                 $fieldArgs['settings'] = $id;
                 $fieldArgs['section']  = self::getTreeValueAt($data, "section");
 
-                if (!isset($fieldArgs['default'])) {
+                if ( ! isset($fieldArgs['default'])) {
                     $fieldArgs['default'] = self::getTreeValueAt($data, "wp_data:default", array());
                 }
 
@@ -165,7 +165,7 @@ class Companion
     public function loadJSON($path)
     {
 
-        if (!file_exists($path)) {
+        if ( ! file_exists($path)) {
             return array();
         }
 
@@ -177,14 +177,14 @@ class Companion
     public function requireCPData($filter = true)
     {
         $cpData = get_theme_mod('theme_options', null);
-        if (!$cpData) {
+        if ( ! $cpData) {
             $site = site_url();
             $site = preg_replace("/http(s)?:\/\//", "", $site);
             $key  = get_theme_mod('theme_pro_key', 'none');
 
             $cpData = $this->loadJSON($this->themeDataPath("/data.json"));
 
-            if (!$cpData) {
+            if ( ! $cpData) {
                 if ($this->remoteDataURL) {
                     require_once ABSPATH . WPINC . "/pluggable.php";
 
@@ -246,7 +246,7 @@ class Companion
             return $this->getCustomizerDataCache[$key];
         }
 
-        if (!is_array($this->cpData)) {
+        if ( ! is_array($this->cpData)) {
             return array();
         }
 
@@ -265,7 +265,7 @@ class Companion
 
     public function isActiveThemeSupported()
     {
-        $supportedThemes = (array) $this->getCustomizerData('themes', false);
+        $supportedThemes = (array)$this->getCustomizerData('themes', false);
         $currentTheme    = $this->themeSlug;
 
         $supported = (in_array($currentTheme, $supportedThemes) || in_array('*', $supportedThemes));
@@ -276,12 +276,12 @@ class Companion
     public function isMaintainable($post_id = false)
     {
 
-        if (!$post_id) {
+        if ( ! $post_id) {
             global $post;
             $post_id = ($post && property_exists($post, "ID")) ? $post->ID : false;
         }
 
-        if (!$post_id) {
+        if ( ! $post_id) {
             return false;
         }
 
@@ -318,7 +318,7 @@ class Companion
         global $post;
         $post_id = ($post && property_exists($post, "ID")) ? $post->ID : false;
 
-        if (!$post_id) {
+        if ( ! $post_id) {
             return false;
         }
 
@@ -337,16 +337,27 @@ class Companion
         if (function_exists('pll_get_post') && function_exists('pll_default_language')) {
             $slug      = pll_default_language('slug');
             $defaultID = pll_get_post($post_id, $slug);
+            $sourceID  = isset($_REQUEST['from_post']) ? $_REQUEST['from_post'] : null;
+            $defaultID = $defaultID ? $defaultID : $sourceID;
 
             if ($defaultID && ($defaultID !== $post_id)) {
                 $result = call_user_func($callback, $defaultID);
             }
         }
-
         global $sitepress;
         if ($sitepress) {
             $defaultLanguage = $sitepress->get_default_language();
-            $defaultID       = icl_object_id($post_id, 'post_' . $post->post_type, true, $defaultLanguage);
+            global $wpdb;
+
+            $sourceTRID = isset($_REQUEST['trid']) ? $_REQUEST['trid'] : null;
+            $trid       = $sitepress->get_element_trid($post_id);
+            $trid       = $trid ? $trid : $sourceTRID;
+            $defaultID  = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND language_code=%s",
+                    $trid,
+                    $defaultLanguage));
+
 
             if ($defaultID && ($defaultID !== $post_id)) {
                 $result = call_user_func($callback, $defaultID);
@@ -359,20 +370,20 @@ class Companion
     public function isFrontPage($post_id = false)
     {
 
-        if (!$post_id) {
+        if ( ! $post_id) {
             global $post;
             $post_id = ($post && property_exists($post, "ID")) ? $post->ID : false;
         }
 
-        if (!$post_id) {
+        if ( ! $post_id) {
             return false;
         }
 
         $isFrontPage = '1' === get_post_meta($post_id, 'is_' . $this->themeSlug . '_front_page', true);
 
-        $isWPFrontPage = is_front_page() && !is_home();
+        $isWPFrontPage = is_front_page() && ! is_home();
 
-        if ($isWPFrontPage && !$isFrontPage && $this->isMaintainable($post_id)) {
+        if ($isWPFrontPage && ! $isFrontPage && $this->isMaintainable($post_id)) {
             update_post_meta($post_id, 'is_' . $this->themeSlug . '_front_page', '1');
             delete_post_meta($post_id, 'is_' . $this->themeSlug . '_maintainable_page');
             $isFrontPage = true;
@@ -470,7 +481,7 @@ class Companion
         update_option($this->themeSlug . '_companion_old_show_on_front', get_option('show_on_front'));
         update_option($this->themeSlug . '_companion_old_page_on_front', get_option('page_on_front'));
 
-        if (!$page) {
+        if ( ! $page) {
             $content = apply_filters('cloudpress\companion\front_page_content', "", $this);
 
             $post_id = wp_insert_post(
@@ -516,7 +527,7 @@ class Companion
     public function createFrontPage()
     {
         $nonce = @$_POST['create_home_page_nounce'];
-        if (!wp_verify_nonce($nonce, 'create_home_page_nounce')) {
+        if ( ! wp_verify_nonce($nonce, 'create_home_page_nounce')) {
             die();
         }
 
@@ -594,9 +605,9 @@ class Companion
 
             </style>
             <div style="display: none;" id="open_page_in_customizer_set_name">
-                <h1 class="cp-open-in-custmizer"><?php _e('Set a name for the new page', 'cloudpress-companion');?></h1>
+                <h1 class="cp-open-in-custmizer"><?php _e('Set a name for the new page', 'cloudpress-companion'); ?></h1>
                 <input placeholder="<?php echo $title_placeholder ?>" class="" name="new-page-name-val"/>
-                <button class="button button-primary" name="new-page-name-save"> <?php _e('Set Page Name', 'cloudpress-companion');?></button>
+                <button class="button button-primary" name="new-page-name-save"> <?php _e('Set Page Name', 'cloudpress-companion'); ?></button>
             </div>
             <script>
                 function cp_open_page_in_customizer(page) {
@@ -679,26 +690,45 @@ class Companion
 
             $isMarked = get_post_meta($post_id, 'is_' . $this->themeSlug . '_maintainable_page', true);
 
-            if (!intval($isMarked)) {
+            if ( ! intval($isMarked)) {
                 update_post_meta($post_id, 'is_' . $this->themeSlug . '_maintainable_page', "1");
                 $template = get_post_meta($post_id, '_wp_page_template', true);
-                if (!$template || $template === "default") {
+                if ( ! $template || $template === "default") {
                     update_post_meta($post_id, '_wp_page_template', "full-width-page.php");
                 }
             }
 
         }
 
+        $url = $this->get_page_link($post_id);
+
         ?>
-        <?php echo admin_url('customize.php') ?>?url=<?php echo esc_url(get_page_link($post_id)) ?>
+        <?php echo admin_url('customize.php') ?>?url=<?php echo esc_url($url) ?>
         <?php
 
         exit;
     }
 
+    public function get_page_link($post_id)
+    {
+        global $sitepress;
+        if ($sitepress) {
+            $url = get_page_link($post_id);
+            $args = array('element_id' => $post_id, 'element_type' => 'page' );
+            $language_code = apply_filters( 'wpml_element_language_code', null, $args );
+            $url = apply_filters( 'wpml_permalink', $url, $language_code );
+        }
+
+        if (!$url) {
+            $url = get_page_link($post_id);
+        }
+
+        return $url;
+    }
+
     public function shortcodeRefresh()
     {
-        if (!is_user_logged_in() || !current_user_can('edit_theme_options')) {
+        if ( ! is_user_logged_in() || ! current_user_can('edit_theme_options')) {
             die();
         }
 
@@ -708,7 +738,7 @@ class Companion
         $context   = isset($_REQUEST['context']) ? $_REQUEST['context'] : array();
 
         //TODO: apply context;
-        if (!$shortcode) {
+        if ( ! $shortcode) {
             die();
         }
 
@@ -801,9 +831,9 @@ class Companion
 
         if ($default === false) {
             $default                = self::instance()->getCustomizerData("customizer:settings:{$mod}:wp_data:default");
-            $alternativeTextDomains = (array) self::instance()->getCustomizerData('alternativeTextDomains:' . self::instance()->getThemeSlug());
+            $alternativeTextDomains = (array)self::instance()->getCustomizerData('alternativeTextDomains:' . self::instance()->getThemeSlug());
 
-            if (!$default) {
+            if ( ! $default) {
                 foreach ($alternativeTextDomains as $atd) {
                     $mod     = self::prefixedMod($mod, $atd);
                     $default = self::instance()->getCustomizerData("customizer:settings:{$mod}:wp_data:default");
@@ -820,7 +850,7 @@ class Companion
             $result = $temp;
         } else {
             $result                 = "CP_UNDEFINED_THEME_MOD";
-            $alternativeTextDomains = (array) self::instance()->getCustomizerData('alternativeTextDomains:' . self::instance()->getThemeSlug());
+            $alternativeTextDomains = (array)self::instance()->getCustomizerData('alternativeTextDomains:' . self::instance()->getThemeSlug());
             foreach ($alternativeTextDomains as $atd) {
                 $temp = get_theme_mod(self::prefixedMod($mod, $atd), "CP_UNDEFINED_THEME_MOD");
                 if ($temp !== "CP_UNDEFINED_THEME_MOD") {
